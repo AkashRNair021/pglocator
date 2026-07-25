@@ -1,0 +1,62 @@
+/* 
+   Property Details Specific Styles 
+*/
+
+.gallery-main-img {
+    height: 400px;
+    object-fit: cover;
+    border-radius: 1rem;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-thumbnail {
+    height: 80px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.gallery-thumbnail:hover {
+    opacity: 0.8;
+}
+
+.gallery-thumbnail.active {
+    opacity: 1;
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.details-card {
+    background: #fff;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+}
+
+.feature-pill {
+    background: rgba(79, 70, 229, 0.05);
+    color: var(--text-main);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid rgba(79, 70, 229, 0.1);
+}
+
+.sticky-booking-card {
+    position: sticky;
+    top: 100px;
+}
+
+.review-card {
+    border-left: 4px solid var(--primary-color);
+    background: var(--bg-light);
+}

@@ -1,0 +1,30 @@
+/* 
+   Property Cards Styling
+*/
+
+.pg-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pg-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg) !important;
+}
+
+.pg-card img {
+    transition: transform 0.5s ease;
+}
+
+.pg-card:hover img {
+    transform: scale(1.05);
+}
+
+.pg-card .btn-light {
+    backdrop-filter: blur(4px);
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.pg-card .btn-light:hover {
+    background: #ff4757;
+    color: white !important;
+}

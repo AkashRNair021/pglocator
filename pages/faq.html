@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PG Locator | Frequently Asked Questions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <style>
+        .faq-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5rem 0;
+            border-radius: 0 0 2rem 2rem;
+            margin-top: -60px; /* pull up behind navbar */
+            padding-top: 120px;
+        }
+        .accordion-button:not(.collapsed) {
+            background-color: rgba(79, 70, 229, 0.05);
+            color: var(--primary-color);
+            font-weight: 600;
+            box-shadow: none;
+        }
+        .accordion-button:focus {
+            box-shadow: none;
+            border-color: rgba(0,0,0,.125);
+        }
+        .nav-pills .nav-link {
+            color: var(--text-muted);
+            font-weight: 500;
+            border-radius: 0.5rem;
+            padding: 0.8rem 1.2rem;
+            transition: all 0.2s ease;
+        }
+        .nav-pills .nav-link:hover {
+            background-color: var(--bg-light);
+        }
+        .nav-pills .nav-link.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-light pt-5">
+
+    <div id="navbar-placeholder"></div>
+
+    <main>
+        <!-- Header & Search -->
+        <section class="faq-header text-center mb-5">
+            <div class="container">
+                <h1 class="display-4 fw-bold mb-3">How can we help you?</h1>
+                <p class="lead mb-4" style="opacity: 0.9;">Search our knowledge base or browse categories below.</p>
+                
+                <div class="mx-auto position-relative" style="max-width: 600px;">
+                    <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-4 text-muted fs-5"></i>
+                    <input type="text" id="faqSearch" class="form-control form-control-lg rounded-pill ps-5 py-3 shadow border-0" placeholder="Ask a question (e.g., 'How do I book?')">
+                </div>
+            </div>
+        </section>
+
+        <!-- Main FAQ Content -->
+        <section class="container mb-5 pb-5">
+            <div class="row g-4">
+                
+                <!-- Sidebar Categories -->
+                <div class="col-lg-3">
+                    <div class="position-sticky" style="top: 100px;">
+                        <h5 class="fw-bold mb-3 px-2">Categories</h5>
+                        <div class="nav flex-column nav-pills gap-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                            <button class="nav-link text-start active" id="cat-general-tab" data-bs-toggle="pill" data-bs-target="#cat-general" type="button" role="tab">General Questions</button>
+                            <button class="nav-link text-start" id="cat-booking-tab" data-bs-toggle="pill" data-bs-target="#cat-booking" type="button" role="tab">Booking & Move-in</button>
+                            <button class="nav-link text-start" id="cat-payments-tab" data-bs-toggle="pill" data-bs-target="#cat-payments" type="button" role="tab">Payments & Refunds</button>
+                            <button class="nav-link text-start" id="cat-owners-tab" data-bs-toggle="pill" data-bs-target="#cat-owners" type="button" role="tab">For Property Owners</button>
+                            <button class="nav-link text-start" id="cat-security-tab" data-bs-toggle="pill" data-bs-target="#cat-security" type="button" role="tab">Trust & Security</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion Area -->
+                <div class="col-lg-9">
+                    <div class="bg-white rounded-4 shadow-sm p-4 p-md-5 border" id="faqContainer">
+                        
+                        <!-- Empty State for Search -->
+                        <div id="noResults" class="text-center py-5 d-none">
+                            <i class="bi bi-search display-1 text-muted mb-3 opacity-25"></i>
+                            <h4 class="fw-bold">No results found</h4>
+                            <p class="text-muted">We couldn't find any articles matching your search.</p>
+                            <button class="btn btn-outline-primary rounded-pill mt-2" onclick="document.getElementById('faqSearch').value=''; document.getElementById('faqSearch').dispatchEvent(new Event('input'));">Clear Search</button>
+                        </div>
+
+                        <div class="tab-content" id="v-pills-tabContent">
+                            
+                            <!-- General -->
+                            <div class="tab-pane fade show active" id="cat-general" role="tabpanel">
+                                <h3 class="fw-bold mb-4">General Questions</h3>
+                                <div class="accordion accordion-flush" id="accGeneral">
+                                    <div class="accordion-item border rounded mb-3">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed rounded" type="button" data-bs-toggle="collapse" data-bs-target="#g1">
+                                                What is PG Locator?
+                                            </button>
+                                        </h2>
+                                        <div id="g1" class="accordion-collapse collapse" data-bs-parent="#accGeneral">
+                                            <div class="accordion-body text-muted">
+                                                PG Locator is a platform designed to connect people looking for paying guest (PG) accommodations with property owners. We provide verified listings, detailed amenities, and transparent pricing.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item border rounded mb-3">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed rounded" type="button" data-bs-toggle="collapse" data-bs-target="#g2">
+                                                Are the property pictures real?
+                                            </button>
+                                        </h2>
+                                        <div id="g2" class="accordion-collapse collapse" data-bs-parent="#accGeneral">
+                                            <div class="accordion-body text-muted">
+                                                Yes. We have a strict verification process. Listings marked with a "Verified" badge have been physically inspected by our team to ensure the photos accurately represent the property.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item border rounded mb-3">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed rounded" type="button" data-bs-toggle="collapse" data-bs-target="#g3">
+                                                Do I need to pay a brokerage fee?
+                                            </button>
+                                        </h2>
+                                        <div id="g3" class="accordion-collapse collapse" data-bs-parent="#accGeneral">
+                                            <div class="accordion-body text-muted">
+                                                No! PG Locator is a zero-brokerage platform. You communicate directly with the property owners, eliminating the need for middlemen and extra fees.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Booking -->
+                            <div class="tab-pane fade" id="cat-booking" role="tabpanel">
+                                <h3 class="fw-bold mb-4">Booking & Move-in</h3>
+                                <div class="accordion accordion-flush" id="accBooking">
+                                    <div class="accordion-item border rounded mb-3">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed rounded" type="button" data-bs-toggle="collapse" data-bs-target="#b1">
+                                                How do I schedule a visit?
+                                            </button>
+                                        </h2>
+                                        <div id="b1" class="accordion-collapse collapse" data-bs-parent="#accBooking">
+                                            <div class="accordion-body text-muted">
+                                                On any property details page, click the "Contact Owner" button. You will be provided with the owner's phone number and email to directly schedule a convenient time for a physical visit.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item border rounded mb-3">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed rounded" type="button" data-bs-toggle="collapse" data-bs-target="#b2">
+                                                What documents are required for move-in?
+                                            </button>
+                                        </h2>
+                                        <div id="b2" class="accordion-collapse collapse" data-bs-parent="#accBooking">
+                                            <div class="accordion-body text-muted">
+                                                Typically, you will need a government-issued photo ID (Aadhar Card, Passport), a passport-sized photograph, and a letter from your employer or college ID. Specific owners may request additional documentation.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Payments -->
+                            <div class="tab-pane fade" id="cat-payments" role="tabpanel">
+                                <h3 class="fw-bold mb-4">Payments & Refunds</h3>
+                                <div class="accordion accordion-flush" id="accPayments">
+                                    <div class="accordion-item border rounded mb-3">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed rounded" type="button" data-bs-toggle="collapse" data-bs-target="#p1">
+                                                How is the security deposit handled?
+                                            </button>
+                                        </h2>
+                                        <div id="p1" class="accordion-collapse collapse" data-bs-parent="#accPayments">
+                                            <div class="accordion-body text-muted">
+                                                Security deposits are handled directly between you and the property owner. The standard deposit is usually 1 to 2 months' rent. Ensure you get a written receipt or rental agreement mentioning the deposit amount.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item border rounded mb-3">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed rounded" type="button" data-bs-toggle="collapse" data-bs-target="#p2">
+                                                Are electricity and water bills included in the rent?
+                                            </button>
+                                        </h2>
+                                        <div id="p2" class="accordion-collapse collapse" data-bs-parent="#accPayments">
+                                            <div class="accordion-body text-muted">
+                                                This varies by property. On the property details page, check the "Rules & Regulations" or "Amenities" section. Many PGs include water, but electricity is often billed separately based on sub-meter usage.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Owners -->
+                            <div class="tab-pane fade" id="cat-owners" role="tabpanel">
+                                <h3 class="fw-bold mb-4">For Property Owners</h3>
+                                <div class="accordion accordion-flush" id="accOwners">
+                                    <div class="accordion-item border rounded mb-3">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed rounded" type="button" data-bs-toggle="collapse" data-bs-target="#o1">
+                                                How do I list my PG on the platform?
+                                            </button>
+                                        </h2>
+                                        <div id="o1" class="accordion-collapse collapse" data-bs-parent="#accOwners">
+                                            <div class="accordion-body text-muted">
+                                                Sign up as an Owner, log in to your dashboard, and click "Add Property". Fill in the required details, upload clear photos, and submit. Our team will review the listing before it goes live.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item border rounded mb-3">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed rounded" type="button" data-bs-toggle="collapse" data-bs-target="#o2">
+                                                How long does approval take?
+                                            </button>
+                                        </h2>
+                                        <div id="o2" class="accordion-collapse collapse" data-bs-parent="#accOwners">
+                                            <div class="accordion-body text-muted">
+                                                Standard approval takes 24-48 hours. If you opt for the "Verified" badge, our field agents will contact you to schedule a physical inspection within 3 business days.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Security -->
+                            <div class="tab-pane fade" id="cat-security" role="tabpanel">
+                                <h3 class="fw-bold mb-4">Trust & Security</h3>
+                                <div class="accordion accordion-flush" id="accSecurity">
+                                    <div class="accordion-item border rounded mb-3">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed rounded" type="button" data-bs-toggle="collapse" data-bs-target="#s1">
+                                                How do you ensure user safety?
+                                            </button>
+                                        </h2>
+                                        <div id="s1" class="accordion-collapse collapse" data-bs-parent="#accSecurity">
+                                            <div class="accordion-body text-muted">
+                                                We verify the contact information of all registered owners. Furthermore, seekers are encouraged to leave honest reviews. Properties with consistent negative safety reviews are investigated and potentially delisted.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item border rounded mb-3">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed rounded" type="button" data-bs-toggle="collapse" data-bs-target="#s2">
+                                                What if I have a dispute with the owner?
+                                            </button>
+                                        </h2>
+                                        <div id="s2" class="accordion-collapse collapse" data-bs-parent="#accSecurity">
+                                            <div class="accordion-body text-muted">
+                                                While rental agreements are strictly between the seeker and owner, our Customer Support team can mediate severe disputes. We recommend documenting all agreements and payments in writing.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/data.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/faq.js"></script>
+</body>
+</html>

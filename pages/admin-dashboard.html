@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PG Locator | Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+
+    <div class="admin-wrapper">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="admin-sidebar-header">
+                <div class="bg-primary text-white rounded d-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
+                    <i class="bi bi-houses-fill"></i>
+                </div>
+                <h4 class="fw-bold mb-0 text-white">PG Locator</h4>
+            </div>
+            <div class="px-4 py-3">
+                <small class="text-uppercase text-muted fw-bold" style="letter-spacing: 0.1em; font-size: 0.75rem;">Admin Panel</small>
+            </div>
+            <nav class="admin-nav">
+                <a href="#" class="admin-nav-link active"><i class="bi bi-speedometer2"></i> Dashboard</a>
+                <a href="#" class="admin-nav-link"><i class="bi bi-building"></i> Listings</a>
+                <a href="#" class="admin-nav-link"><i class="bi bi-person-badge"></i> Owners</a>
+                <a href="#" class="admin-nav-link"><i class="bi bi-people"></i> Users</a>
+                <a href="#" class="admin-nav-link"><i class="bi bi-gear"></i> Settings</a>
+            </nav>
+            <div class="position-absolute bottom-0 w-100 p-3">
+                <a href="../index.html" class="btn btn-outline-light w-100 rounded-pill"><i class="bi bi-box-arrow-left me-2"></i> Exit Admin</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-content">
+            <!-- Topbar -->
+            <header class="admin-topbar">
+                <div class="d-flex align-items-center gap-3">
+                    <button class="btn btn-light d-lg-none" onclick="document.getElementById('adminSidebar').classList.toggle('show')">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <h4 class="fw-bold mb-0">Overview</h4>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <div class="position-relative">
+                        <i class="bi bi-bell fs-5 text-muted"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
+                            <span class="visually-hidden">New alerts</span>
+                        </span>
+                    </div>
+                    <div class="vr mx-2"></div>
+                    <div class="d-flex align-items-center gap-2">
+                        <img src="https://ui-avatars.com/api/?name=Admin+User&background=4f46e5&color=fff" class="rounded-circle" width="35" height="35" alt="Admin">
+                        <span class="fw-medium d-none d-md-block">Super Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Statistics Cards -->
+            <div class="row g-4 mb-4" id="adminStatsContainer">
+                <!-- Injected by admin.js -->
+            </div>
+
+            <!-- Charts Section -->
+            <div class="row g-4 mb-4">
+                <div class="col-lg-8">
+                    <div class="chart-container">
+                        <div class="d-flex justify-content-between mb-3">
+                            <h5 class="fw-bold mb-0">Platform Growth</h5>
+                            <select class="form-select form-select-sm w-auto border-0 bg-light shadow-none">
+                                <option>This Year</option>
+                                <option>Last Year</option>
+                            </select>
+                        </div>
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="chart-container">
+                        <h5 class="fw-bold mb-4">Users by Category</h5>
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tables Section -->
+            <div class="row g-4">
+                <!-- Latest Listings Table -->
+                <div class="col-lg-8">
+                    <div class="dashboard-table-container h-100">
+                        <div class="d-flex justify-content-between align-items-center p-4 border-bottom bg-white">
+                            <h5 class="fw-bold mb-0">Latest Listings</h5>
+                            <a href="#" class="btn btn-sm btn-outline-primary rounded-pill">View All</a>
+                        </div>
+                        <div class="table-responsive bg-white">
+                            <table class="table dashboard-table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Property</th>
+                                        <th>City</th>
+                                        <th>Rent</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="latestListingsTableBody">
+                                    <!-- Injected by admin.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Users Table -->
+                <div class="col-lg-4">
+                    <div class="dashboard-table-container h-100">
+                        <div class="d-flex justify-content-between align-items-center p-4 border-bottom bg-white">
+                            <h5 class="fw-bold mb-0">Recent Registrations</h5>
+                        </div>
+                        <div class="table-responsive bg-white">
+                            <table class="table dashboard-table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Role</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recentUsersTableBody">
+                                    <!-- Injected by admin.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/data.js"></script>
+    <!-- Note: We omit app.js here because admin layout does not use the standard frontend navbar/footer -->
+    <script src="../js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PG Locator | Find Your Perfect Home</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/cards.css">
+</head>
+<body>
+
+    <!-- Dynamically Injected Navbar -->
+    <div id="navbar-placeholder"></div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section position-relative d-flex align-items-center justify-content-center">
+            <!-- Background Image overlay -->
+            <div class="hero-bg position-absolute top-0 start-0 w-100 h-100" style="background: url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;"></div>
+            <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50"></div>
+            
+            <div class="container position-relative z-1 text-center mt-5 pt-5">
+                <span class="badge glass-badge mb-3 py-2 px-4 rounded-pill fw-medium text-white fs-6">
+                    <i class="bi bi-stars text-warning"></i> #1 Platform for PG Seekers
+                </span>
+                <h1 class="display-3 fw-bolder text-white mb-3 text-shadow">
+                    Find Your Perfect <br> <span class="text-gradient-light">Home Away From Home</span>
+                </h1>
+                <p class="lead text-white-50 mb-5 max-w-700 mx-auto text-shadow-sm">
+                    Discover premium, verified, and affordable PG accommodations tailored for students and professionals.
+                </p>
+                
+                <!-- Advanced Search Bar -->
+                <div class="advanced-search-box glass-panel p-4 rounded-4 mx-auto shadow-lg">
+                    <form action="pages/listings.html" class="row g-3 align-items-end text-start">
+                        <div class="col-md-3">
+                            <label class="form-label text-white fw-medium small mb-1">City</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-0"><i class="bi bi-buildings text-primary"></i></span>
+                                <select class="form-select border-0 shadow-none">
+                                    <option selected>Bangalore</option>
+                                    <option value="1">Mumbai</option>
+                                    <option value="2">Pune</option>
+                                    <option value="3">Delhi</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label text-white fw-medium small mb-1">Location / Landmark</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-0"><i class="bi bi-geo-alt text-primary"></i></span>
+                                <input type="text" class="form-control border-0 shadow-none" placeholder="e.g. Koramangala">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label text-white fw-medium small mb-1">Gender</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-0"><i class="bi bi-gender-ambiguous text-primary"></i></span>
+                                <select class="form-select border-0 shadow-none">
+                                    <option selected>Any</option>
+                                    <option value="boys">Boys</option>
+                                    <option value="girls">Girls</option>
+                                    <option value="unisex">Unisex</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label text-white fw-medium small mb-1">Budget</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-0"><i class="bi bi-currency-rupee text-primary"></i></span>
+                                <select class="form-select border-0 shadow-none">
+                                    <option selected>Any</option>
+                                    <option value="5k">&lt; ₹5,000</option>
+                                    <option value="10k">₹5,000 - ₹10,000</option>
+                                    <option value="15k">₹10,000 - ₹15,000</option>
+                                    <option value="15k+">₹15,000+</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-primary w-100 rounded-3 py-2 fw-bold" type="button" onclick="window.location.href='pages/listings.html'">
+                                <i class="bi bi-search me-2"></i> Search
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gender Selection Section -->
+        <section class="py-5 bg-white">
+            <div class="container my-5">
+                <div class="text-center mb-5">
+                    <h6 class="text-primary fw-bold text-uppercase tracking-wide">Category</h6>
+                    <h2 class="fw-bold">Who are you looking for?</h2>
+                </div>
+                <div class="row g-4 justify-content-center">
+                    <div class="col-md-4">
+                        <div class="card category-card rounded-4 border-0 shadow-sm overflow-hidden h-100 text-center" onclick="window.location.href='pages/listings.html'">
+                            <div class="card-body p-5">
+                                <div class="icon-wrapper bg-primary-subtle text-primary rounded-circle mx-auto mb-4 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                    <i class="bi bi-gender-male fs-1"></i>
+                                </div>
+                                <h4 class="fw-bold mb-2">Boys PG</h4>
+                                <p class="text-muted mb-0">Safe and comfortable spaces exclusively for men.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card category-card rounded-4 border-0 shadow-sm overflow-hidden h-100 text-center" onclick="window.location.href='pages/listings.html'">
+                            <div class="card-body p-5">
+                                <div class="icon-wrapper bg-danger-subtle text-danger rounded-circle mx-auto mb-4 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                    <i class="bi bi-gender-female fs-1"></i>
+                                </div>
+                                <h4 class="fw-bold mb-2">Girls PG</h4>
+                                <p class="text-muted mb-0">Highly secure accommodations exclusively for women.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card category-card rounded-4 border-0 shadow-sm overflow-hidden h-100 text-center" onclick="window.location.href='pages/listings.html'">
+                            <div class="card-body p-5">
+                                <div class="icon-wrapper bg-success-subtle text-success rounded-circle mx-auto mb-4 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                    <i class="bi bi-people fs-1"></i>
+                                </div>
+                                <h4 class="fw-bold mb-2">Unisex / Co-ed PG</h4>
+                                <p class="text-muted mb-0">Modern co-living spaces for everyone.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Cities Section -->
+        <section class="py-5 bg-light">
+            <div class="container my-5">
+                <div class="d-flex justify-content-between align-items-end mb-5">
+                    <div>
+                        <h6 class="text-primary fw-bold text-uppercase tracking-wide">Locations</h6>
+                        <h2 class="fw-bold mb-0">Explore Top Cities</h2>
+                    </div>
+                    <a href="pages/listings.html" class="btn btn-outline-primary rounded-pill">View All <i class="bi bi-arrow-right"></i></a>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-3">
+                        <div class="city-card rounded-4 overflow-hidden position-relative">
+                            <img src="https://images.unsplash.com/photo-1596176530529-78163a4f7af2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Bangalore" class="w-100 h-100 object-fit-cover">
+                            <div class="city-overlay position-absolute bottom-0 w-100 p-4">
+                                <h4 class="text-white fw-bold mb-1">Bangalore</h4>
+                                <p class="text-white-50 mb-0">2,450+ Properties</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="city-card rounded-4 overflow-hidden position-relative">
+                            <img src="https://images.unsplash.com/photo-1566552881560-0be862a7c445?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Mumbai" class="w-100 h-100 object-fit-cover">
+                            <div class="city-overlay position-absolute bottom-0 w-100 p-4">
+                                <h4 class="text-white fw-bold mb-1">Mumbai</h4>
+                                <p class="text-white-50 mb-0">1,820+ Properties</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="city-card rounded-4 overflow-hidden position-relative">
+                            <img src="https://images.unsplash.com/photo-1587474260580-589f2d15fb79?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Delhi" class="w-100 h-100 object-fit-cover">
+                            <div class="city-overlay position-absolute bottom-0 w-100 p-4">
+                                <h4 class="text-white fw-bold mb-1">Delhi</h4>
+                                <p class="text-white-50 mb-0">3,100+ Properties</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="city-card rounded-4 overflow-hidden position-relative">
+                            <img src="https://images.unsplash.com/photo-1572913017567-02f06497f1f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Pune" class="w-100 h-100 object-fit-cover">
+                            <div class="city-overlay position-absolute bottom-0 w-100 p-4">
+                                <h4 class="text-white fw-bold mb-1">Pune</h4>
+                                <p class="text-white-50 mb-0">1,240+ Properties</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured PG Listings (Static Premium Sample) -->
+        <section class="py-5 bg-white">
+            <div class="container my-5">
+                <div class="text-center mb-5">
+                    <h6 class="text-primary fw-bold text-uppercase tracking-wide">Handpicked</h6>
+                    <h2 class="fw-bold">Featured Properties</h2>
+                </div>
+                <div class="row g-4">
+                    <!-- Premium Card 1 -->
+                    <div class="col-md-4">
+                        <div class="card pg-card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" class="card-img-top object-fit-cover" alt="Elite PG" style="height: 250px;">
+                                <div class="position-absolute top-0 end-0 p-3">
+                                    <button class="btn btn-light rounded-circle shadow-sm p-2 text-danger">
+                                        <i class="bi bi-heart"></i>
+                                    </button>
+                                </div>
+                                <span class="badge bg-primary position-absolute bottom-0 start-0 m-3 rounded-pill px-3 py-2 fs-6 shadow">
+                                    ₹8,500/mo
+                                </span>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h4 class="card-title fw-bold mb-0">Elite Skyline Men's PG</h4>
+                                    <div class="badge bg-success text-white rounded-pill fs-6 px-2 py-1">
+                                        <i class="bi bi-star-fill text-warning"></i> 4.8
+                                    </div>
+                                </div>
+                                <p class="text-muted mb-3"><i class="bi bi-geo-alt-fill text-primary"></i> Koramangala, Bangalore</p>
+                                
+                                <div class="d-flex gap-2 text-muted small mt-auto">
+                                    <span class="bg-light px-2 py-1 rounded"><i class="bi bi-check-circle-fill text-success"></i> WiFi</span>
+                                    <span class="bg-light px-2 py-1 rounded"><i class="bi bi-check-circle-fill text-success"></i> AC</span>
+                                    <span class="bg-light px-2 py-1 rounded"><i class="bi bi-check-circle-fill text-success"></i> Food</span>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white border-0 p-4 pt-0">
+                                <a href="pages/property-details.html?id=pg-001" class="btn btn-outline-primary w-100 rounded-pill fw-medium py-2">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Premium Card 2 -->
+                    <div class="col-md-4">
+                        <div class="card pg-card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" class="card-img-top object-fit-cover" alt="Serene Spaces" style="height: 250px;">
+                                <div class="position-absolute top-0 end-0 p-3">
+                                    <button class="btn btn-light rounded-circle shadow-sm p-2 text-muted">
+                                        <i class="bi bi-heart"></i>
+                                    </button>
+                                </div>
+                                <span class="badge bg-primary position-absolute bottom-0 start-0 m-3 rounded-pill px-3 py-2 fs-6 shadow">
+                                    ₹9,200/mo
+                                </span>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h4 class="card-title fw-bold mb-0">Serene Spaces Women's PG</h4>
+                                    <div class="badge bg-success text-white rounded-pill fs-6 px-2 py-1">
+                                        <i class="bi bi-star-fill text-warning"></i> 4.9
+                                    </div>
+                                </div>
+                                <p class="text-muted mb-3"><i class="bi bi-geo-alt-fill text-primary"></i> Indiranagar, Bangalore</p>
+                                
+                                <div class="d-flex gap-2 text-muted small mt-auto">
+                                    <span class="bg-light px-2 py-1 rounded"><i class="bi bi-check-circle-fill text-success"></i> WiFi</span>
+                                    <span class="bg-light px-2 py-1 rounded"><i class="bi bi-check-circle-fill text-success"></i> Gym</span>
+                                    <span class="bg-light px-2 py-1 rounded"><i class="bi bi-check-circle-fill text-success"></i> Security</span>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white border-0 p-4 pt-0">
+                                <a href="pages/property-details.html?id=pg-002" class="btn btn-outline-primary w-100 rounded-pill fw-medium py-2">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Premium Card 3 -->
+                    <div class="col-md-4">
+                        <div class="card pg-card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1502672260266-1c1c24240f38?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" class="card-img-top object-fit-cover" alt="Oasis Co-living" style="height: 250px;">
+                                <div class="position-absolute top-0 end-0 p-3">
+                                    <button class="btn btn-light rounded-circle shadow-sm p-2 text-muted">
+                                        <i class="bi bi-heart"></i>
+                                    </button>
+                                </div>
+                                <span class="badge bg-primary position-absolute bottom-0 start-0 m-3 rounded-pill px-3 py-2 fs-6 shadow">
+                                    ₹12,000/mo
+                                </span>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h4 class="card-title fw-bold mb-0">Oasis Co-living Studio</h4>
+                                    <div class="badge bg-success text-white rounded-pill fs-6 px-2 py-1">
+                                        <i class="bi bi-star-fill text-warning"></i> 4.7
+                                    </div>
+                                </div>
+                                <p class="text-muted mb-3"><i class="bi bi-geo-alt-fill text-primary"></i> Andheri West, Mumbai</p>
+                                
+                                <div class="d-flex gap-2 text-muted small mt-auto">
+                                    <span class="bg-light px-2 py-1 rounded"><i class="bi bi-check-circle-fill text-success"></i> Pool</span>
+                                    <span class="bg-light px-2 py-1 rounded"><i class="bi bi-check-circle-fill text-success"></i> Gym</span>
+                                    <span class="bg-light px-2 py-1 rounded"><i class="bi bi-check-circle-fill text-success"></i> Food</span>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white border-0 p-4 pt-0">
+                                <a href="pages/listings.html" class="btn btn-outline-primary w-100 rounded-pill fw-medium py-2">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics Section -->
+        <section class="py-5 bg-primary text-white">
+            <div class="container my-4">
+                <div class="row text-center g-4">
+                    <div class="col-md-3">
+                        <div class="display-4 fw-bolder mb-2">10K+</div>
+                        <p class="mb-0 fs-5 text-white-50">Happy Tenants</p>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="display-4 fw-bolder mb-2">5,000+</div>
+                        <p class="mb-0 fs-5 text-white-50">Verified Properties</p>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="display-4 fw-bolder mb-2">20+</div>
+                        <p class="mb-0 fs-5 text-white-50">Cities Covered</p>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="display-4 fw-bolder mb-2">4.8</div>
+                        <p class="mb-0 fs-5 text-white-50">Average Rating</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Popular Amenities Section -->
+        <section class="py-5 bg-light">
+            <div class="container my-5">
+                <div class="text-center mb-5">
+                    <h6 class="text-primary fw-bold text-uppercase tracking-wide">Comfort & Convenience</h6>
+                    <h2 class="fw-bold">Popular Amenities</h2>
+                </div>
+                <div class="row g-4 text-center">
+                    <div class="col-6 col-md-3">
+                        <div class="amenity-card p-4 bg-white rounded-4 shadow-sm border border-light">
+                            <i class="bi bi-wifi fs-1 text-primary mb-3 d-block"></i>
+                            <h5 class="fw-bold mb-0">High-Speed WiFi</h5>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="amenity-card p-4 bg-white rounded-4 shadow-sm border border-light">
+                            <i class="bi bi-cup-hot fs-1 text-primary mb-3 d-block"></i>
+                            <h5 class="fw-bold mb-0">Nutritious Meals</h5>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="amenity-card p-4 bg-white rounded-4 shadow-sm border border-light">
+                            <i class="bi bi-shield-check fs-1 text-primary mb-3 d-block"></i>
+                            <h5 class="fw-bold mb-0">24/7 Security</h5>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="amenity-card p-4 bg-white rounded-4 shadow-sm border border-light">
+                            <i class="bi bi-bucket fs-1 text-primary mb-3 d-block"></i>
+                            <h5 class="fw-bold mb-0">Housekeeping</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="py-5 bg-white">
+            <div class="container my-5">
+                <div class="text-center mb-5">
+                    <h6 class="text-primary fw-bold text-uppercase tracking-wide">Testimonials</h6>
+                    <h2 class="fw-bold">What Our Users Say</h2>
+                </div>
+                <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner pb-5">
+                        <div class="carousel-item active">
+                            <div class="row justify-content-center">
+                                <div class="col-md-8 text-center">
+                                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="User" class="rounded-circle mb-4 shadow-sm" style="width: 100px; height: 100px; object-fit: cover;">
+                                    <h4 class="fst-italic text-muted mb-4">"PG Locator made finding a safe and comfortable PG in Bangalore incredibly easy. The virtual tours and verified listings saved me so much time!"</h4>
+                                    <h5 class="fw-bold mb-0">Priya Sharma</h5>
+                                    <p class="text-primary">Software Engineer</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row justify-content-center">
+                                <div class="col-md-8 text-center">
+                                    <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="User" class="rounded-circle mb-4 shadow-sm" style="width: 100px; height: 100px; object-fit: cover;">
+                                    <h4 class="fst-italic text-muted mb-4">"As a student moving to a new city, I was worried about accommodation. This platform gave me exactly what I needed - budget-friendly and secure."</h4>
+                                    <h5 class="fw-bold mb-0">Rahul Verma</h5>
+                                    <p class="text-primary">College Student</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon bg-primary rounded-circle" aria-hidden="true" style="width: 3rem; height: 3rem; background-size: 50%;"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon bg-primary rounded-circle" aria-hidden="true" style="width: 3rem; height: 3rem; background-size: 50%;"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Preview -->
+        <section class="py-5 bg-light">
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="text-center mb-5">
+                            <h6 class="text-primary fw-bold text-uppercase tracking-wide">Support</h6>
+                            <h2 class="fw-bold">Frequently Asked Questions</h2>
+                        </div>
+                        <div class="accordion accordion-flush custom-accordion shadow-sm rounded-4 overflow-hidden" id="faqAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                        Are the properties verified?
+                                    </button>
+                                </h2>
+                                <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body text-muted">
+                                        Yes, every property listed on PG Locator goes through a strict verification process by our team to ensure safety and authenticity.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                        Are there any brokerage fees?
+                                    </button>
+                                </h2>
+                                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body text-muted">
+                                        No! PG Locator is a zero-brokerage platform. You directly connect with the property owners.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                        Can I visit the property before booking?
+                                    </button>
+                                </h2>
+                                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body text-muted">
+                                        Absolutely. You can schedule a visit through the platform to check out the PG before making any commitments.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <a href="pages/faq.html" class="text-primary fw-bold text-decoration-none hover-primary">View All FAQs <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call To Action -->
+        <section class="py-5 position-relative cta-section overflow-hidden">
+            <div class="cta-bg position-absolute top-0 start-0 w-100 h-100 bg-primary opacity-10"></div>
+            <div class="container my-5 position-relative z-1 text-center">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <h2 class="display-5 fw-bolder mb-4">Ready to find your next home?</h2>
+                        <p class="lead text-muted mb-5">Join thousands of students and professionals who have found their perfect accommodation with PG Locator.</p>
+                        <div class="d-flex justify-content-center gap-3 flex-wrap">
+                            <a href="pages/listings.html" class="btn btn-primary btn-lg rounded-pill px-5 shadow">Get Started</a>
+                            <a href="pages/owner-dashboard.html" class="btn btn-outline-dark btn-lg rounded-pill px-5">List Your Property</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Dynamically Injected Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
