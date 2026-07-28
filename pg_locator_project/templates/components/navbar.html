@@ -1,0 +1,69 @@
+{% load static %}
+<nav class="navbar navbar-expand-xl navbar-light fixed-top custom-navbar">
+    <div class="container">
+        <a class="navbar-brand fw-bolder fs-4 d-flex align-items-center gap-2" href="{% url 'core:home' %}">
+            <div class="brand-logo-container bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                <i class="bi bi-houses-fill"></i>
+            </div>
+            <span class="brand-text">PG Locator</span>
+        </a>
+        
+        <button class="navbar-toggler border-0 shadow-none p-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto mb-2 mb-xl-0 gap-1">
+                <li class="nav-item"><a class="nav-link fw-medium" href="{% url 'core:home' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link fw-medium" href="{% url 'pgs:list' %}">Find PG</a></li>
+                {% if user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link fw-medium" href="{% url 'compare:list' %}">Compare</a></li>
+                <li class="nav-item"><a class="nav-link fw-medium" href="{% url 'favorites:list' %}">Favorites</a></li>
+                {% endif %}
+                <li class="nav-item"><a class="nav-link fw-medium" href="{% url 'core:about' %}">About</a></li>
+                <li class="nav-item"><a class="nav-link fw-medium" href="{% url 'core:faq' %}">FAQ</a></li>
+                <li class="nav-item"><a class="nav-link fw-medium" href="{% url 'core:contact' %}">Contact</a></li>
+                
+                {% if user.is_authenticated %}
+                    {% if user.role == 'owner' or user.role == 'admin' %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-medium" href="#" id="ownerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Owner
+                        </a>
+                        <ul class="dropdown-menu shadow-sm border-0" aria-labelledby="ownerDropdown">
+                            <li><a class="dropdown-item" href="{% url 'dashboard:owner_dashboard' %}"><i class="bi bi-speedometer2 me-2"></i> Owner Dashboard</a></li>
+                            <li><a class="dropdown-item" href="{% url 'owners:add_pg' %}"><i class="bi bi-plus-circle me-2"></i> Add PG</a></li>
+                        </ul>
+                    </li>
+                    {% endif %}
+                    {% if user.role == 'admin' %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-medium" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Admin
+                        </a>
+                        <ul class="dropdown-menu shadow-sm border-0" aria-labelledby="adminDropdown">
+                            <li><a class="dropdown-item" href="{% url 'dashboard:admin_dashboard' %}"><i class="bi bi-speedometer me-2"></i> Dashboard</a></li>
+                            <li><a class="dropdown-item" href="{% url 'dashboard:admin_listings' %}"><i class="bi bi-list-check me-2"></i> Manage Listings</a></li>
+                            <li><a class="dropdown-item" href="{% url 'dashboard:admin_users' %}"><i class="bi bi-people me-2"></i> Manage Users</a></li>
+                        </ul>
+                    </li>
+                    {% endif %}
+                {% endif %}
+            </ul>
+            
+            <div class="d-flex align-items-center gap-3 mt-3 mt-xl-0">
+                {% if user.is_authenticated %}
+                <form method="post" action="{% url 'accounts:logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                        Logout ({{ user.username }})
+                    </button>
+                </form>
+                {% else %}
+                <a href="{% url 'accounts:login' %}" class="btn btn-sm btn-outline-secondary rounded-pill px-3">Login</a>
+                <a href="{% url 'accounts:register' %}" class="btn btn-primary rounded-pill px-4">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>
