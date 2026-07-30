@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,9 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/navbar.css">
-    <link rel="stylesheet" href="../css/cards.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cards.css' %}">
     <style>
         .filter-sidebar {
             position: sticky;
@@ -34,32 +35,34 @@
 </head>
 <body class="bg-light pt-5">
 
-    <div id="navbar-placeholder"></div>
+    <!-- Django Included Navbar -->
+    {% include 'components/navbar.html' %}
 
     <main class="container-fluid mt-5 pt-4 px-xl-5">
+        <form id="filterForm" method="GET" action="{% url 'pgs:list' %}">
         <div class="row">
             
             <!-- Sidebar Filters -->
             <aside class="col-lg-3 d-none d-lg-block filter-sidebar">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h5 class="fw-bold mb-0">Filters</h5>
-                    <button class="btn btn-sm btn-link text-decoration-none text-muted" onclick="resetFilters()">Clear All</button>
+                    <a href="{% url 'pgs:list' %}" class="btn btn-sm btn-link text-decoration-none text-muted">Clear All</a>
                 </div>
 
                 <!-- Search -->
                 <div class="mb-4">
-                    <input type="text" id="filterSearch" class="form-control rounded-pill shadow-sm" placeholder="Search by name, area...">
+                    <input type="text" name="q" value="{{ current_q }}" class="form-control rounded-pill shadow-sm" placeholder="Search by name, area..." onchange="document.getElementById('filterForm').submit();">
                 </div>
 
                 <!-- City & Area -->
                 <div class="mb-4">
                     <h6 class="fw-bold mb-3">Location</h6>
-                    <select id="filterCity" class="form-select mb-2 shadow-sm rounded-3">
+                    <select name="city" class="form-select mb-2 shadow-sm rounded-3" onchange="document.getElementById('filterForm').submit();">
                         <option value="">Any City</option>
-                        <option value="Bangalore">Bangalore</option>
-                        <option value="Mumbai">Mumbai</option>
-                        <option value="Pune">Pune</option>
-                        <option value="Delhi">Delhi</option>
+                        <option value="Bangalore" {% if current_city == 'Bangalore' %}selected{% endif %}>Bangalore</option>
+                        <option value="Mumbai" {% if current_city == 'Mumbai' %}selected{% endif %}>Mumbai</option>
+                        <option value="Pune" {% if current_city == 'Pune' %}selected{% endif %}>Pune</option>
+                        <option value="Delhi" {% if current_city == 'Delhi' %}selected{% endif %}>Delhi</option>
                     </select>
                 </div>
 
@@ -67,16 +70,16 @@
                 <div class="mb-4">
                     <h6 class="fw-bold mb-3">Category</h6>
                     <div class="d-flex gap-2 flex-wrap">
-                        <input type="radio" class="btn-check" name="filterGender" id="genderAny" value="" autocomplete="off" checked>
+                        <input type="radio" class="btn-check" name="gender" id="genderAny" value="" autocomplete="off" {% if not current_gender %}checked{% endif %} onchange="document.getElementById('filterForm').submit();">
                         <label class="btn btn-outline-dark rounded-pill btn-sm" for="genderAny">Any</label>
 
-                        <input type="radio" class="btn-check" name="filterGender" id="genderBoys" value="boys" autocomplete="off">
+                        <input type="radio" class="btn-check" name="gender" id="genderBoys" value="boys" autocomplete="off" {% if current_gender == 'boys' %}checked{% endif %} onchange="document.getElementById('filterForm').submit();">
                         <label class="btn btn-outline-primary rounded-pill btn-sm" for="genderBoys">Boys</label>
 
-                        <input type="radio" class="btn-check" name="filterGender" id="genderGirls" value="girls" autocomplete="off">
+                        <input type="radio" class="btn-check" name="gender" id="genderGirls" value="girls" autocomplete="off" {% if current_gender == 'girls' %}checked{% endif %} onchange="document.getElementById('filterForm').submit();">
                         <label class="btn btn-outline-danger rounded-pill btn-sm" for="genderGirls">Girls</label>
 
-                        <input type="radio" class="btn-check" name="filterGender" id="genderUnisex" value="unisex" autocomplete="off">
+                        <input type="radio" class="btn-check" name="gender" id="genderUnisex" value="unisex" autocomplete="off" {% if current_gender == 'unisex' %}checked{% endif %} onchange="document.getElementById('filterForm').submit();">
                         <label class="btn btn-outline-success rounded-pill btn-sm" for="genderUnisex">Unisex</label>
                     </div>
                 </div>
@@ -84,52 +87,58 @@
                 <!-- Rent Range -->
                 <div class="mb-4">
                     <h6 class="fw-bold mb-3 d-flex justify-content-between">
-                        <span>Rent Range</span>
-                        <span id="rentLabel" class="text-primary small">₹0 - ₹20000</span>
+                        <span>Max Rent</span>
+                        <span id="rentLabel" class="text-primary small">₹{{ current_max_rent }}</span>
                     </h6>
-                    <input type="range" class="form-range" id="filterRent" min="0" max="20000" step="500" value="20000">
+                    <input type="range" name="max_rent" class="form-range" min="1000" max="30000" step="500" value="{{ current_max_rent }}" onchange="document.getElementById('rentLabel').innerText = '₹' + this.value; document.getElementById('filterForm').submit();" oninput="document.getElementById('rentLabel').innerText = '₹' + this.value;">
                 </div>
 
                 <!-- Room Type -->
                 <div class="mb-4">
-                    <h6 class="fw-bold mb-3">Room Type</h6>
-                    <select id="filterRoomType" class="form-select shadow-sm rounded-3">
-                        <option value="">Any</option>
-                        <option value="single">Single Room</option>
-                        <option value="shared">Shared Room</option>
+                    <h6 class="fw-bold mb-3">Room Type & Availability</h6>
+                    <select name="room_type" class="form-select shadow-sm rounded-3 mb-2" onchange="document.getElementById('filterForm').submit();">
+                        <option value="">Any Occupancy</option>
+                        <option value="single" {% if current_room_type == 'single' %}selected{% endif %}>Single Room</option>
+                        <option value="shared" {% if current_room_type == 'shared' %}selected{% endif %}>Shared Room</option>
                     </select>
+                    <div class="form-check mt-2">
+                        <input class="form-check-input" type="checkbox" name="available_only" id="filterAvailable" {% if current_available_only %}checked{% endif %} onchange="document.getElementById('filterForm').submit();">
+                        <label class="form-check-label fw-medium text-success" for="filterAvailable">
+                            Show Available Only
+                        </label>
+                    </div>
                 </div>
 
                 <!-- Amenities -->
                 <div class="mb-4">
                     <h6 class="fw-bold mb-3">Amenities</h6>
-                    <div class="d-flex flex-column gap-2" id="amenitiesFilter">
+                    <div class="d-flex flex-column gap-2">
                         <div class="form-check">
-                            <input class="form-check-input filter-amenity" type="checkbox" value="WiFi" id="amenityWifi">
+                            <input class="form-check-input filter-amenity" name="amenities" type="checkbox" value="WiFi" id="amenityWifi" {% if 'WiFi' in current_amenities %}checked{% endif %} onchange="document.getElementById('filterForm').submit();">
                             <label class="form-check-label text-muted" for="amenityWifi">WiFi</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input filter-amenity" type="checkbox" value="Food" id="amenityFood">
+                            <input class="form-check-input filter-amenity" name="amenities" type="checkbox" value="Food" id="amenityFood" {% if 'Food' in current_amenities %}checked{% endif %} onchange="document.getElementById('filterForm').submit();">
                             <label class="form-check-label text-muted" for="amenityFood">Food Included</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input filter-amenity" type="checkbox" value="AC" id="amenityAC">
+                            <input class="form-check-input filter-amenity" name="amenities" type="checkbox" value="AC" id="amenityAC" {% if 'AC' in current_amenities %}checked{% endif %} onchange="document.getElementById('filterForm').submit();">
                             <label class="form-check-label text-muted" for="amenityAC">AC</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input filter-amenity" type="checkbox" value="Laundry" id="amenityLaundry">
+                            <input class="form-check-input filter-amenity" name="amenities" type="checkbox" value="Laundry" id="amenityLaundry" {% if 'Laundry' in current_amenities %}checked{% endif %} onchange="document.getElementById('filterForm').submit();">
                             <label class="form-check-label text-muted" for="amenityLaundry">Laundry</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input filter-amenity" type="checkbox" value="Parking" id="amenityParking">
+                            <input class="form-check-input filter-amenity" name="amenities" type="checkbox" value="Parking" id="amenityParking" {% if 'Parking' in current_amenities %}checked{% endif %} onchange="document.getElementById('filterForm').submit();">
                             <label class="form-check-label text-muted" for="amenityParking">Parking</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input filter-amenity" type="checkbox" value="Security" id="amenitySecurity">
+                            <input class="form-check-input filter-amenity" name="amenities" type="checkbox" value="Security" id="amenitySecurity" {% if 'Security' in current_amenities %}checked{% endif %} onchange="document.getElementById('filterForm').submit();">
                             <label class="form-check-label text-muted" for="amenitySecurity">Security</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input filter-amenity" type="checkbox" value="Power Backup" id="amenityPower">
+                            <input class="form-check-input filter-amenity" name="amenities" type="checkbox" value="Power Backup" id="amenityPower" {% if 'Power Backup' in current_amenities %}checked{% endif %} onchange="document.getElementById('filterForm').submit();">
                             <label class="form-check-label text-muted" for="amenityPower">Power Backup</label>
                         </div>
                     </div>
@@ -150,32 +159,137 @@
                 <div class="d-flex justify-content-between align-items-center mb-4 bg-white p-3 rounded-4 shadow-sm">
                     <div>
                         <h4 class="fw-bold mb-0">Properties</h4>
-                        <p class="text-muted small mb-0"><span id="resultsCount">0</span> results found</p>
+                        <p class="text-muted small mb-0"><span id="resultsCount">{{ pgs.count }}</span> results found</p>
                     </div>
                     <div class="d-flex align-items-center gap-2">
                         <span class="text-muted small fw-medium text-nowrap">Sort By:</span>
-                        <select id="sortSelect" class="form-select form-select-sm border-0 bg-light rounded-3 shadow-none fw-medium" style="min-width: 150px;">
-                            <option value="popularity">Popularity</option>
-                            <option value="priceLow">Lowest Price</option>
-                            <option value="priceHigh">Highest Price</option>
-                            <option value="rating">Highest Rating</option>
+                        <select name="sort" id="sortSelect" class="form-select form-select-sm border-0 bg-light rounded-3 shadow-none fw-medium" style="min-width: 150px;" onchange="document.getElementById('filterForm').submit();">
+                            <option value="popularity" {% if current_sort == 'popularity' %}selected{% endif %}>Popularity</option>
+                            <option value="priceLow" {% if current_sort == 'priceLow' %}selected{% endif %}>Lowest Price</option>
+                            <option value="priceHigh" {% if current_sort == 'priceHigh' %}selected{% endif %}>Highest Price</option>
+                            <option value="rating" {% if current_sort == 'rating' %}selected{% endif %}>Highest Rating</option>
                         </select>
                     </div>
                 </div>
 
                 <!-- Listings Grid -->
                 <div class="row g-4" id="listingsContainer">
-                    <!-- Cards injected via JS -->
+                    {% for pg in pgs %}
+                    <div class="col-md-6">
+                        <div class="card pg-card border-0 h-100">
+                            <div class="position-relative">
+                                {% if pg.images.first %}
+                                <img src="{{ pg.images.first.image.url }}" class="card-img-top pg-img" alt="{{ pg.name }}">
+                                {% else %}
+                                <div class="card-img-top pg-img bg-light d-flex justify-content-center align-items-center">
+                                    <i class="bi bi-image text-muted fs-1"></i>
+                                </div>
+                                {% endif %}
+                                <div class="position-absolute top-0 end-0 m-3 d-flex gap-2">
+                                    <button class="btn btn-light btn-sm rounded-circle shadow-sm fav-btn {% if pg.id in user_favorite_pg_ids %}text-danger{% else %}text-muted{% endif %}" onclick="window.toggleFavoriteGlobal('{{ pg.id }}', this); event.preventDefault(); event.stopPropagation();" aria-label="Favorite">
+                                        <i class="bi {% if pg.id in user_favorite_pg_ids %}bi-heart-fill{% else %}bi-heart{% endif %}"></i>
+                                    </button>
+                                </div>
+                                <div class="position-absolute bottom-0 start-0 m-3">
+                                    <span class="badge bg-primary px-3 py-2 rounded-pill shadow">{{ pg.get_gender_type_display }}</span>
+                                </div>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <h5 class="fw-bold mb-1">{{ pg.name }}</h5>
+                                        <p class="text-muted small mb-0"><i class="bi bi-geo-alt-fill text-danger me-1"></i>{{ pg.city }}, {{ pg.state }}</p>
+                                    </div>
+                                    <div class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2 py-1">
+                                        <i class="bi bi-star-fill text-warning"></i> 4.5
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex gap-2 mt-3 mb-4">
+                                    {% for amenity in pg.amenities.all|slice:":3" %}
+                                    <span class="badge bg-light text-dark border fw-normal"><i class="bi bi-check2 text-success me-1"></i>{{ amenity.name }}</span>
+                                    {% endfor %}
+                                    {% if pg.amenities.count > 3 %}
+                                    <span class="badge bg-light text-dark border fw-normal">+{{ pg.amenities.count|add:"-3" }}</span>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input shadow-sm" type="checkbox" role="switch" id="compare{{ pg.id }}" {% if pg.id in user_compare_pg_ids %}checked{% endif %} onchange="window.toggleCompare('{{ pg.id }}', this)">
+                                        <label class="form-check-label small text-muted fw-medium" for="compare{{ pg.id }}">Compare</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                                    <div>
+                                        <span class="text-muted small d-block">Starts from</span>
+                                        <h5 class="fw-bold text-primary mb-0">₹{{ pg.rooms.first.price_per_month|default:"0.00" }}<span class="fs-6 text-muted fw-normal">/mo</span></h5>
+                                    </div>
+                                    <a href="{% url 'pgs:detail' pg.slug %}" class="btn btn-outline-primary rounded-pill px-4 fw-medium">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12 text-center py-5">
+                        <i class="bi bi-search text-muted mb-3" style="font-size: 3rem;"></i>
+                        <h4 class="text-muted">No properties found matching your criteria</h4>
+                        <a href="{% url 'pgs:list' %}" class="btn btn-primary mt-3">Clear Filters</a>
+                    </div>
+                    {% endfor %}
                 </div>
+                
+                <!-- Pagination Controls -->
+                {% if is_paginated %}
+                <nav aria-label="Page navigation" class="mt-5">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link shadow-sm" href="?page={{ page_obj.previous_page_number }}{% if query_string %}&{{ query_string }}{% endif %}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo; Previous</span>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link shadow-sm" href="#" tabindex="-1" aria-disabled="true">&laquo; Previous</a>
+                        </li>
+                        {% endif %}
+
+                        {% for i in paginator.page_range %}
+                            {% if page_obj.number == i %}
+                            <li class="page-item active" aria-current="page">
+                                <span class="page-link shadow-sm">{{ i }}</span>
+                            </li>
+                            {% else %}
+                            <li class="page-item"><a class="page-link shadow-sm" href="?page={{ i }}{% if query_string %}&{{ query_string }}{% endif %}">{{ i }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link shadow-sm" href="?page={{ page_obj.next_page_number }}{% if query_string %}&{{ query_string }}{% endif %}" aria-label="Next">
+                                <span aria-hidden="true">Next &raquo;</span>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link shadow-sm" href="#" tabindex="-1" aria-disabled="true">Next &raquo;</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
             </div>
         </div>
+        </form>
     </main>
 
-    <div id="footer-placeholder"></div>
+    <!-- Django Included Footer -->
+    {% include 'components/footer.html' %}
 
+    <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../js/data.js"></script>
-    <script src="../js/app.js"></script>
-    <script src="../js/search.js"></script>
+    <script src="{% static 'js/app.js' %}"></script>
 </body>
 </html>

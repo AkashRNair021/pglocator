@@ -34,6 +34,7 @@ class PGListing(models.Model):
     gender_type = models.CharField(
         max_length=10, 
         choices=GenderChoices.choices,
+        db_index=True,
         verbose_name=_('Gender Type')
     )
     address = models.TextField(verbose_name=_('Address'))
@@ -65,7 +66,7 @@ class PGListing(models.Model):
         verbose_name=_('Amenities'),
         blank=True
     )
-    is_approved = models.BooleanField(default=False, verbose_name=_('Is Approved'))
+    is_approved = models.BooleanField(default=False, db_index=True, verbose_name=_('Is Approved'))
     
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Created At'))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Updated At'))
@@ -77,6 +78,16 @@ class PGListing(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def average_rating(self):
+        from django.db.models import Avg
+        avg = self.reviews.aggregate(Avg('rating'))['rating__avg']
+        return round(avg, 1) if avg else 0.0
+
+    @property
+    def total_reviews(self):
+        return self.reviews.count()
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -133,7 +144,7 @@ class PGImage(models.Model):
         verbose_name=_('PG Listing')
     )
     image = models.ImageField(
-        upload_to='pg_images/',
+        upload_to='pg_images/%Y/%m/',
         verbose_name=_('Image')
     )
     is_primary = models.BooleanField(
@@ -152,3 +163,16 @@ class PGImage(models.Model):
 
     def __str__(self):
         return f"Image for {self.pg.name}"
+
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+import os
+
+@receiver(post_delete, sender=PGImage)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+    """
+    Deletes file from filesystem when corresponding `PGImage` object is deleted.
+    """
+    if instance.image:
+        if os.path.isfile(instance.image.path):
+            os.remove(instance.image.path)

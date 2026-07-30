@@ -10,9 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/dashboard.css">
-    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin.css' %}">
 </head>
 <body>
 
@@ -136,10 +136,14 @@
                                     <form method="post" action="{% url 'dashboard:toggle_approval' pg.id %}" class="d-inline">
                                         {% csrf_token %}
                                         {% if pg.is_approved %}
-                                        <button type="submit" class="btn btn-sm btn-outline-danger me-1" title="Revoke Approval"><i class="bi bi-x-circle"></i> Revoke</button>
+                                        <button type="submit" class="btn btn-sm btn-outline-warning me-1" title="Revoke Approval"><i class="bi bi-x-circle"></i> Revoke</button>
                                         {% else %}
                                         <button type="submit" class="btn btn-sm btn-outline-success me-1" title="Approve Listing"><i class="bi bi-check-circle"></i> Approve</button>
                                         {% endif %}
+                                    </form>
+                                    <form method="post" action="{% url 'moderation:admin_delete_pg' pg.id %}" class="d-inline" onsubmit="return confirm('Are you sure you want to completely delete this listing?');">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-sm btn-outline-danger me-1" title="Delete Listing"><i class="bi bi-trash"></i> Delete</button>
                                     </form>
                                     <a href="{% url 'pgs:detail' pg.slug %}" class="btn btn-sm btn-light border shadow-sm text-primary"><i class="bi bi-eye"></i></a>
                                 </td>

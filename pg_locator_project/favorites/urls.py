@@ -1,14 +1,9 @@
 from django.urls import path
-from django.http import HttpResponse
 from . import views
-
-# Placeholder for toggle action which requires logic later
-def dummy_toggle(request, **kwargs):
-    return HttpResponse("Toggle favorite not implemented yet.")
 
 app_name = 'favorites'
 
 urlpatterns = [
     path('', views.FavoriteListView.as_view(), name='list'),
-    path('toggle/<slug:slug>/', dummy_toggle, name='toggle_favorite'),
+    path('api/toggle/<int:pg_id>/', views.ToggleFavoriteView.as_view(), name='toggle'),
 ]

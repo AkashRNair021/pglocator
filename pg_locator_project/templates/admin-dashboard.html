@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,9 +12,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/dashboard.css">
-    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin.css' %}">
 </head>
 <body>
 
@@ -68,7 +69,38 @@
 
             <!-- Statistics Cards -->
             <div class="row g-4 mb-4" id="adminStatsContainer">
-                <!-- Injected by admin.js -->
+                <div class="col-md-3">
+                    <div class="stat-card border-start border-primary border-4 rounded-3 h-100 p-4 d-block position-relative overflow-hidden">
+                        <i class="bi bi-people text-primary position-absolute end-0 top-50 translate-middle-y me-n2" style="font-size: 5rem; opacity: 0.1;"></i>
+                        <h6 class="text-muted fw-bold text-uppercase mb-1">Total Users</h6>
+                        <h2 class="fw-bolder mb-0 text-dark">{{ total_users }}</h2>
+                        <small class="text-muted fw-medium">Platform Seekers</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card border-start border-info border-4 rounded-3 h-100 p-4 d-block position-relative overflow-hidden">
+                        <i class="bi bi-person-badge text-info position-absolute end-0 top-50 translate-middle-y me-n2" style="font-size: 5rem; opacity: 0.1;"></i>
+                        <h6 class="text-muted fw-bold text-uppercase mb-1">Total Owners</h6>
+                        <h2 class="fw-bolder mb-0 text-dark">{{ total_owners }}</h2>
+                        <small class="text-muted fw-medium">Platform Partners</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card border-start border-success border-4 rounded-3 h-100 p-4 d-block position-relative overflow-hidden">
+                        <i class="bi bi-building text-success position-absolute end-0 top-50 translate-middle-y me-n2" style="font-size: 5rem; opacity: 0.1;"></i>
+                        <h6 class="text-muted fw-bold text-uppercase mb-1">Total PGs listed</h6>
+                        <h2 class="fw-bolder mb-0 text-dark">{{ total_pgs }}</h2>
+                        <small class="text-muted fw-medium">Active Properties</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card border-start border-warning border-4 rounded-3 h-100 p-4 d-block position-relative overflow-hidden">
+                        <i class="bi bi-hourglass-split text-warning position-absolute end-0 top-50 translate-middle-y me-n2" style="font-size: 5rem; opacity: 0.1;"></i>
+                        <h6 class="text-muted fw-bold text-uppercase mb-1">Pending Approvals</h6>
+                        <h2 class="fw-bolder mb-0 text-dark">{{ pending_pgs }}</h2>
+                        <small class="text-danger fw-medium">Requires attention</small>
+                    </div>
+                </div>
             </div>
 
             <!-- Charts Section -->
@@ -114,7 +146,48 @@
                                     </tr>
                                 </thead>
                                 <tbody id="latestListingsTableBody">
-                                    <!-- Injected by admin.js -->
+                                    {% for pg in latest_listings %}
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-3">
+                                                {% if pg.images.first %}
+                                                <img src="{{ pg.images.first.image.url }}" class="rounded-2 object-fit-cover shadow-sm" width="40" height="40">
+                                                {% else %}
+                                                <div class="bg-light rounded-2 d-flex justify-content-center align-items-center shadow-sm" style="width: 40px; height: 40px;">
+                                                    <i class="bi bi-image text-muted"></i>
+                                                </div>
+                                                {% endif %}
+                                                <span class="fw-bold text-dark text-truncate" style="max-width: 150px;">{{ pg.name }}</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-muted">{{ pg.city }}</td>
+                                        <td class="fw-medium">₹{{ pg.rooms.first.price_per_month|default:"0" }}</td>
+                                        <td>
+                                            {% if pg.is_approved %}
+                                            <span class="badge bg-success-subtle text-success border border-success">Approved</span>
+                                            {% else %}
+                                            <span class="badge bg-warning-subtle text-warning border border-warning">Pending</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'pgs:detail' pg.slug %}" class="btn btn-sm btn-light border text-primary" title="Review">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            {% if not pg.is_approved %}
+                                            <form method="post" action="{% url 'dashboard:toggle_approval' pg.id %}" class="d-inline">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-sm btn-success shadow-sm ms-1" title="Approve">
+                                                    <i class="bi bi-check"></i>
+                                                </button>
+                                            </form>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="5" class="text-center py-3 text-muted">No recent listings.</td>
+                                    </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -136,7 +209,70 @@
                                     </tr>
                                 </thead>
                                 <tbody id="recentUsersTableBody">
-                                    <!-- Injected by admin.js -->
+                                    {% for r_user in recent_users %}
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-3">
+                                                <div class="rounded-circle bg-primary-subtle text-primary d-flex align-items-center justify-content-center fw-bold shadow-sm" style="width: 35px; height: 35px;">
+                                                    {{ r_user.get_full_name|default:r_user.username|slice:":2"|upper }}
+                                                </div>
+                                                <span class="fw-medium text-dark">{{ r_user.get_full_name|default:r_user.username }}</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            {% if r_user.is_superuser %}
+                                            <span class="badge bg-danger-subtle text-danger border">Admin</span>
+                                            {% elif r_user.is_owner %}
+                                            <span class="badge bg-info-subtle text-info border">Owner</span>
+                                            {% else %}
+                                            <span class="badge bg-light text-dark border">Seeker</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="2" class="text-center py-3 text-muted">No recent users.</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity Log Section -->
+            <div class="row mt-4 mb-4">
+                <div class="col-12">
+                    <div class="dashboard-table-container">
+                        <div class="d-flex justify-content-between align-items-center p-4 border-bottom bg-white">
+                            <h5 class="fw-bold mb-0">System Activity Log</h5>
+                        </div>
+                        <div class="table-responsive bg-white">
+                            <table class="table dashboard-table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Timestamp</th>
+                                        <th>Admin User</th>
+                                        <th>Action Type</th>
+                                        <th>Target Object</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for log in recent_activities %}
+                                    <tr>
+                                        <td class="text-muted">{{ log.timestamp|date:"M d, Y H:i" }}</td>
+                                        <td class="fw-medium">{{ log.actor.get_full_name|default:log.actor.username }}</td>
+                                        <td>
+                                            <span class="badge bg-secondary-subtle text-secondary border">{{ log.get_action_type_display }}</span>
+                                        </td>
+                                        <td>{{ log.target_object_repr }}</td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="4" class="text-center py-3 text-muted">No recent activities logged.</td>
+                                    </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -148,8 +284,13 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../js/data.js"></script>
     <!-- Note: We omit app.js here because admin layout does not use the standard frontend navbar/footer -->
-    <script src="../js/admin.js"></script>
+    
+    {{ chart_months|safe|json_script:"chartMonthsData" }}
+    {{ chart_users|safe|json_script:"chartUsersData" }}
+    {{ chart_category_labels|safe|json_script:"chartCategoryLabelsData" }}
+    {{ chart_category_data|safe|json_script:"chartCategoryData" }}
+    
+    <script src="{% static 'js/admin.js' %}"></script>
 </body>
 </html>

@@ -10,10 +10,11 @@ urlpatterns = [
     path('pgs/', include('pgs.urls', namespace='pgs')),
     path('owner/', include('owners.urls', namespace='owners')),
     path('dashboard/', include('dashboard.urls', namespace='dashboard')),
+    path('moderation/', include('moderation.urls', namespace='moderation')),
     path('reviews/', include('reviews.urls', namespace='reviews')),
     path('favorites/', include('favorites.urls', namespace='favorites')),
     path('compare/', include('compare.urls', namespace='compare')),
-
+    
     # Core app for static pages (Home, About, Contact, FAQ)
     path('', include('core.urls', namespace='core')),
 ]

@@ -31,7 +31,8 @@ class RegisterView(CreateView):
         user = form.save()
         # If the user registered as an owner, create their profile immediately
         if user.role == User.RoleChoices.OWNER:
-            OwnerProfile.objects.create(user=user, phone_number=f"+0000000_{user.id}") # Temporary dummy phone to bypass validator for now
+            phone = form.cleaned_data.get('phone_number')
+            OwnerProfile.objects.create(user=user, phone_number=phone)
         
         login(self.request, user)
         

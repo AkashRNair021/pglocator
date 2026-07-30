@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,13 +10,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/navbar.css">
-    <link rel="stylesheet" href="../css/cards.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cards.css' %}">
 </head>
 <body class="bg-light pt-5">
 
-    <div id="navbar-placeholder"></div>
+    {% include 'components/navbar.html' %}
 
     <main class="container mt-5 pt-4 min-vh-100">
         <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
@@ -24,25 +25,69 @@
                 <p class="text-muted mb-0">Properties you have saved for later</p>
             </div>
             <div class="badge bg-primary-subtle text-primary fs-6 px-3 py-2 rounded-pill">
-                <span id="favoritesCount">0</span> Saved
+                <span id="favoritesCount">{{ favorites.count }}</span> Saved
             </div>
         </div>
 
         <div class="row g-4 pb-5" id="favoritesContainer">
-            <!-- Cards will be injected here via JS -->
-            <div class="col-12 text-center py-5">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Loading...</span>
+            {% for fav in favorites %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card pg-card border-0 h-100">
+                        <div class="position-relative">
+                            {% if fav.pg.images.first %}
+                            <img src="{{ fav.pg.images.first.image.url }}" class="card-img-top pg-img" alt="{{ fav.pg.name }}">
+                            {% else %}
+                            <div class="card-img-top pg-img bg-light d-flex justify-content-center align-items-center">
+                                <i class="bi bi-image text-muted fs-1"></i>
+                            </div>
+                            {% endif %}
+                            <div class="position-absolute top-0 end-0 m-3 d-flex gap-2">
+                                <button class="btn btn-light btn-sm rounded-circle shadow-sm fav-btn text-danger" onclick="window.toggleFavoriteGlobal('{{ fav.pg.id }}', this); event.preventDefault(); event.stopPropagation();" aria-label="Favorite">
+                                    <i class="bi bi-heart-fill"></i>
+                                </button>
+                            </div>
+                            <div class="position-absolute bottom-0 start-0 m-3">
+                                <span class="badge bg-primary px-3 py-2 rounded-pill shadow">{{ fav.pg.get_gender_type_display }}</span>
+                            </div>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div>
+                                    <h5 class="fw-bold mb-1">{{ fav.pg.name }}</h5>
+                                    <p class="text-muted small mb-0"><i class="bi bi-geo-alt-fill text-danger me-1"></i>{{ fav.pg.city }}, {{ fav.pg.state }}</p>
+                                </div>
+                                <div class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2 py-1">
+                                    <i class="bi bi-star-fill text-warning"></i> {{ fav.pg.average_rating|default:"New" }}
+                                </div>
+                            </div>
+                            <div class="d-flex gap-2 mt-3 mb-4">
+                                {% for amenity in fav.pg.amenities.all|slice:":3" %}
+                                <span class="badge bg-light text-dark border fw-normal"><i class="bi bi-check2 text-success me-1"></i>{{ amenity.name }}</span>
+                                {% endfor %}
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top">
+                                <div>
+                                    <span class="text-muted small d-block">Starts from</span>
+                                    <h5 class="fw-bold text-primary mb-0">₹{{ fav.pg.rooms.first.price_per_month|default:"0" }}<span class="fs-6 text-muted fw-normal">/mo</span></h5>
+                                </div>
+                                <a href="{% url 'pgs:detail' fav.pg.slug %}" class="btn btn-outline-primary rounded-pill px-4 fw-medium">View Details</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            {% empty %}
+                <div class="col-12 text-center py-5">
+                    <i class="bi bi-heart text-muted mb-3" style="font-size: 3rem;"></i>
+                    <h4 class="text-muted">You haven't saved any properties yet</h4>
+                    <a href="{% url 'pgs:list' %}" class="btn btn-primary mt-3">Browse Properties</a>
+                </div>
+            {% endfor %}
         </div>
     </main>
 
-    <div id="footer-placeholder"></div>
+    {% include 'components/footer.html' %}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../js/data.js"></script>
-    <script src="../js/app.js"></script>
-    <script src="../js/favorites.js"></script>
+    <script src="{% static 'js/app.js' %}"></script>
 </body>
 </html>
